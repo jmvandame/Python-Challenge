@@ -11,6 +11,9 @@ profit_loss_change = []
 change = 0 
 previous_month = 0
 average_change = 0.0
+greatest_inc_month = ""
+greatest_dec_month = ""
+dates = [] 
 
 with open (csvpath) as csvfile:
 
@@ -18,24 +21,35 @@ with open (csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     #Read the header row
     csv_header = next(csvreader)
-    #print(f"CSV Header: {csv_header}")
-
+#process the first row to obtain inital values 
     first_row = next(csvreader)
     months += 1
     net_total = net_total + int(first_row[1])
     previous_month = int(first_row[1])
-
+    dates.append(first_row[0])
     
     for row in csvreader:
+        #Total number of months
         months = months + 1
         net_total = net_total + int(row[1])
         profit_loss_change.append(int(row[1])- previous_month)
         previous_month = int(row[1])
         average_change = (sum(profit_loss_change))/(len(profit_loss_change))
+        dates.append(row[0])
+#Greatest Increase /Index increased by 1 to account for first row
+greatest_inc = max(profit_loss_change)
+greatest_index = profit_loss_change.index(greatest_inc) + 1
+greatest_inc_month = dates[greatest_index]
 
-
+#Greatest Decrease /Index increased by 1 to account for first row
+greatest_dec = min(profit_loss_change)
+worst_index = profit_loss_change.index(greatest_dec) + 1
+greatest_dec_month = dates[worst_index]
+#Displaying Information     
 print("Financial Analysis")
 print("--------------------------")
 print(f'Total Months: {months}')
 print(f'Total: ${net_total}')
-print(f'Average Change: ${average_change}')
+print("Average Change: $" + str(round(average_change, 2)))
+print(f'Greatest Increase in Profits: {greatest_inc_month} (${greatest_inc})')
+print(f'Greatest Decrease in Profits: {greatest_dec_month} (${greatest_dec})')
