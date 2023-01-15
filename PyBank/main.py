@@ -45,6 +45,7 @@ greatest_inc_month = dates[greatest_index]
 greatest_dec = min(profit_loss_change)
 worst_index = profit_loss_change.index(greatest_dec) + 1
 greatest_dec_month = dates[worst_index]
+
 #Displaying Information     
 print("Financial Analysis")
 print("--------------------------")
@@ -53,3 +54,14 @@ print(f'Total: ${net_total}')
 print("Average Change: $" + str(round(average_change, 2)))
 print(f'Greatest Increase in Profits: {greatest_inc_month} (${greatest_inc})')
 print(f'Greatest Decrease in Profits: {greatest_dec_month} (${greatest_dec})')
+
+output_path = os.path.join("PyBank", "Analysis", "Output.txt")
+f = open(output_path, 'w')
+f.write("Financial Analysis\n")
+f.write("--------------------------\n")
+f.write(f'Total Months: {months}\n')
+f.write(f'Total: ${net_total}\n')
+f.write("Average Change: $" + str(round(average_change, 2)) + "\n")
+f.write(f'Greatest Increase in Profits: {greatest_inc_month} (${greatest_inc})\n')
+f.write(f'Greatest Decrease in Profits: {greatest_dec_month} (${greatest_dec})\n')
+f.close()
